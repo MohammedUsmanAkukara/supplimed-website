@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-suppliGreen: #A3C065;
+  --color-suppliDarkGreen: #8DA857;
+  --color-suppliGrey: #939598;
+  --color-suppliDarkGrey: #58595B;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+  @apply bg-gray-50 text-suppliDarkGrey font-sans antialiased;
+}
