@@ -1,0 +1,32 @@
+name: Deploy to GoDaddy via FTP
+
+on:
+  push:
+    branches: [ main ] # Jab bhi aap 'main' branch par push karoge, ye chal padega
+
+jobs:
+  web-deploy:
+    name: Rerun Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies and Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Sync files to GoDaddy Server
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/          # Ye folder GitHub actions build karke bhejega
+          server-dir: /public_html/   # GoDaddy ka main live folder
